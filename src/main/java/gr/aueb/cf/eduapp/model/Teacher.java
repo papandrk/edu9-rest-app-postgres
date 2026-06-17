@@ -49,6 +49,16 @@ public class Teacher extends AbstractEntity {
         this.uuid = UUID.randomUUID();
     }
 
+    public void tieToUser(User user) {
+        this.user = user;
+        user.setTeacher(this);
+    }
+
+    public void untieFromUser() { // can this exist/be run even though the user field has 'nullable = false'?
+        this.user.setTeacher(null);
+        this.user = null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Teacher teacher)) return false;
