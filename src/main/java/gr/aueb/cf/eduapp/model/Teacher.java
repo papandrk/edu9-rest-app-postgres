@@ -39,6 +39,11 @@ public class Teacher extends AbstractEntity {
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
 
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "personal_info_id") // 'unique = true' not needed since the relationship is flagged as
+                                           // one-to-one - hibernate takes care that the id is unique
+    private PersonalInfo personalInfo;
+
     @PrePersist
     public void initializeUUID() {
         this.uuid = UUID.randomUUID();
