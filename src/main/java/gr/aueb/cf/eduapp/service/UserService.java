@@ -19,7 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.UUID;
 
 @Service
-@Slf4j // TODO add logging
+@Slf4j
 @RequiredArgsConstructor
 public class UserService implements IUserService {
 
@@ -27,6 +27,13 @@ public class UserService implements IUserService {
     private final Mapper mapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
+
+    // public UserService(UserRepository userRepository, Mapper mapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    //     this.userRepository = userRepository;
+    //     this.mapper = mapper;
+    //     this.roleRepository = roleRepository;
+    //     this.passwordEncoder = passwordEncoder;
+    // }
 
     @Override
     @Transactional(rollbackFor = {EntityAlreadyExistsException.class, EntityInvalidArgumentException.class})
