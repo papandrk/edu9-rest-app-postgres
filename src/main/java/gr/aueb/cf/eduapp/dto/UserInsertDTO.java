@@ -15,7 +15,8 @@ public record UserInsertDTO(
         @Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=])^.{8,}$")
         String password,
 
-        @NotBlank // superset of '@NotNull' because it includes blank strings (i.e. "")
+        // @NotBlank // superset of '@NotNull' because it includes blank strings (i.e. "") - BUT it can only be used on strings - not long like we have here
+        @NotNull
         Long roleId
 ) {
 }
