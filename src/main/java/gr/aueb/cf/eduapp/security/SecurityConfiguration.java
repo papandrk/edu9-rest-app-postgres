@@ -50,7 +50,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
                                 .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll()
+                                // .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll() // not sure if this works/is valid
+                                .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
                                 .anyRequest().authenticated()
                         )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
