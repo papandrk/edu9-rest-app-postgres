@@ -6,6 +6,8 @@ import gr.aueb.cf.eduapp.dto.AuthenticationResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,7 +18,8 @@ public class AuthRestController {
 
     private final AuthenticationService authenticationService;
 
-    public ResponseEntity<AuthenticationResponseDTO> authenticate(AuthenticationRequestDTO dto) {
+    @PostMapping("/authenticate")
+    public ResponseEntity<AuthenticationResponseDTO> authenticate(@RequestBody AuthenticationRequestDTO dto) {
         AuthenticationResponseDTO responseDTO = authenticationService.authenticate(dto);
         return  ResponseEntity.ok(responseDTO);
         // return new ResponseEntity<>(responseDTO, HttpStatus.OK); // effectively the same thing as the above line
