@@ -4,6 +4,7 @@ import gr.aueb.cf.eduapp.authentication.AuthenticationService;
 import gr.aueb.cf.eduapp.dto.AuthenticationRequestDTO;
 import gr.aueb.cf.eduapp.dto.AuthenticationResponseDTO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,5 +19,6 @@ public class AuthRestController {
     public ResponseEntity<AuthenticationResponseDTO> authenticate(AuthenticationRequestDTO dto) {
         AuthenticationResponseDTO responseDTO = authenticationService.authenticate(dto);
         return  ResponseEntity.ok(responseDTO);
+        // return new ResponseEntity<>(responseDTO, HttpStatus.OK); // effectively the same thing as the above line
     }
 }
