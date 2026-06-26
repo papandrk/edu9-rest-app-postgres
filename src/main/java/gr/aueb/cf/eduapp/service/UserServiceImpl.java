@@ -22,14 +22,14 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService implements IUserService {
+public class UserServiceImpl implements IUserService {
 
     private final UserRepository userRepository;
     private final Mapper mapper;
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-    // public UserService(UserRepository userRepository, Mapper mapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
+    // public UserServiceImpl(UserRepository userRepository, Mapper mapper, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
     //     this.userRepository = userRepository;
     //     this.mapper = mapper;
     //     this.roleRepository = roleRepository;
