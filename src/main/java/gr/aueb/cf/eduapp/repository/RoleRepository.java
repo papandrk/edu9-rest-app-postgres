@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
-    List<Role> FindAllByOrderByNameAsc();
+    List<Role> findAllByOrderByNameAsc();
 }
