@@ -13,12 +13,18 @@ import java.util.UUID;
 public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpecificationExecutor<Teacher> {
 
     Optional<Teacher> findByUuid(UUID uuid);
-    Optional<Teacher> findByVat(String Vat);
+    Optional<Teacher> findByVat(String vat);
     Optional<Teacher> findByPersonalInfo_Amka(String amka);
 
     @EntityGraph(attributePaths = {"personalInfo", "region"})
-    Page<Teacher> findAllByDeletedFalseOrderByNameAsc(Pageable pageable);
+    Page<Teacher> findAllByDeletedFalse(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"personalInfo", "region"})
+    Page<Teacher> findAllByDeletedFalseOrderByFirstnameAsc(Pageable pageable);
+
+    @EntityGraph(attributePaths = {"personalInfo", "region"})
+    Page<Teacher> findAllByDeletedFalseOrderByLastnameAsc(Pageable pageable);
 
     Optional<Teacher> findByUuidAndDeletedFalse(UUID uuid);
-    Optional<Teacher> findByVatAndDeletedFalse(String Vat);
+    Optional<Teacher> findByVatAndDeletedFalse(String vat);
 }
