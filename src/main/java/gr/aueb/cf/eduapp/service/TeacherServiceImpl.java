@@ -301,11 +301,11 @@ public class TeacherServiceImpl implements ITeacherService {
             log.info("Attachment for teacher with amka={} saved", personalInfo.getAmka());
             
         } catch (EntityNotFoundException e) {
-            log.error("Attachment for teacher with amka={} not found", uuid, e);
+            log.error("Attachment for teacher with uuid={} not found", uuid, e);
             throw e;
         } catch (IOException | HttpServerErrorException e) {
-            log.error("Error saving attachment for teacher with amka={}", uuid, e);
-            throw new FileUploadException("TeacherAmka", "Error saving attachment for teacher with amka=" + uuid);
+            log.error("Error saving attachment for teacher with uuid={}", uuid, e);
+            throw new FileUploadException("TeacherAmka", "Error saving attachment for teacher with uuid=" + uuid);
         }
     }
 
