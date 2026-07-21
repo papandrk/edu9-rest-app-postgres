@@ -87,10 +87,12 @@ public class TeacherServiceImpl implements ITeacherService {
             final Region region = regionRepository.findById(dto.regionId())
                     .orElseThrow(() -> new EntityInvalidArgumentException("Region", "Region id=" + dto.regionId() + " invalid"));
 
-            final Long roleId = 3L;    // Πάντα ο ρόλος είναι teacher - TODO να αλλάξει το DTO
-            // Role role = roleRepository.findById(dto.userInsertDTO().roleId())
+            // final Role role = roleRepository.findById(dto.userInsertDTO().roleId())
             //         .orElseThrow(() -> new EntityInvalidArgumentException("Role","Role id=" + dto.userInsertDTO().roleId() + " invalid"));
-            Role role = roleRepository.findById(roleId)
+
+            // instead of the above code, since the role is fixed in this use case, we do the following:
+            Long roleId = 3L;    // Πάντα ο ρόλος είναι teacher - TODO να αλλάξει το DTO
+            final Role role = roleRepository.findById(roleId)
                     .orElseThrow(() -> new EntityInvalidArgumentException("Role","Role id=" + roleId + " invalid"));
 
             Teacher teacher = mapper.mapToTeacherEntity(dto);
@@ -101,6 +103,7 @@ public class TeacherServiceImpl implements ITeacherService {
 
             region.addTeacher(teacher);
             role.addUser(user);
+
             // teacher.tieToUser(user); // (added to mapper)
 
             teacherRepository.save(teacher); // saves teacher AND related user & personalInfo to db (because of cascade declared on model)
