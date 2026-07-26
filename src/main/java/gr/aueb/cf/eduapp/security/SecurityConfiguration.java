@@ -52,6 +52,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/teachers").permitAll()
+                                .requestMatchers(HttpMethod.POST, "/api/v1/teachers/{uuid}/*").permitAll() // TODO: make only the endpoint with the uuid of current user accessible, unless they have ADMIN role
                                 // .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll() // not sure if this works/is valid
                                 // .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasAuthority("VIEW_USER")
