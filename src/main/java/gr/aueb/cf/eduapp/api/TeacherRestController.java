@@ -6,6 +6,7 @@ import gr.aueb.cf.eduapp.core.exceptions.ValidationException;
 import gr.aueb.cf.eduapp.dto.TeacherInsertDTO;
 import gr.aueb.cf.eduapp.dto.TeacherReadOnlyDTO;
 import gr.aueb.cf.eduapp.service.ITeacherService;
+import gr.aueb.cf.eduapp.validator.TeacherInsertValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,7 @@ import java.net.URI;
 public class TeacherRestController {
 
     private final ITeacherService teacherService;
+    private final TeacherInsertValidator teacherInsertValidator;
 
     @PostMapping
     public ResponseEntity<TeacherReadOnlyDTO> saveTeacher(
@@ -31,7 +33,7 @@ public class TeacherRestController {
             BindingResult bindingResult
     ) throws EntityAlreadyExistsException, EntityInvalidArgumentException, ValidationException {
 
-        // teacherInsertValidator.validate(teacherInsertDTO, bindingResult);
+        teacherInsertValidator.validate(teacherInsertDTO, bindingResult);
 
         if (bindingResult.hasErrors()) {
             throw new ValidationException("Teacher", "Invalid teacher data", bindingResult);
