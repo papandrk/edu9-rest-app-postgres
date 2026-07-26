@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-                if (!jwtService.isTokenValid(jwt, userDetails)) {
+                if (!jwtService.isTokenValid(jwt, userDetails)) { // TODO: even if token is invalid, the request should continue because the endpoint may be open to all (permitAll) - while testing this wasn't the case, so it should be fixed
                     throw new BadCredentialsException("Invalid token");
                 }
 
