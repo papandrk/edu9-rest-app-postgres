@@ -1,8 +1,6 @@
 package gr.aueb.cf.eduapp.api;
 
-import gr.aueb.cf.eduapp.core.exceptions.EntityAlreadyExistsException;
-import gr.aueb.cf.eduapp.core.exceptions.EntityInvalidArgumentException;
-import gr.aueb.cf.eduapp.core.exceptions.ValidationException;
+import gr.aueb.cf.eduapp.core.exceptions.*;
 import gr.aueb.cf.eduapp.dto.TeacherInsertDTO;
 import gr.aueb.cf.eduapp.dto.TeacherReadOnlyDTO;
 import gr.aueb.cf.eduapp.service.ITeacherService;
@@ -11,13 +9,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/v1/teachers")
@@ -50,5 +47,15 @@ public class TeacherRestController {
         return ResponseEntity
                 .created(location)
                 .body(teacherReadOnlyDTO);
+    }
+
+    @PostMapping("/{uuid}/amka-file")
+    public ResponseEntity<Void> uploadAmkaFile(
+            @PathVariable UUID uuid,
+            @RequestParam("amkaFile") MultipartFile amkaFile
+    ) throws EntityNotFoundException, FileUploadException {
+
+        teacherService.saveAmkaFile(uuid, amkaFile);
+        return  ResponseEntity.noContent().build();
     }
 }
