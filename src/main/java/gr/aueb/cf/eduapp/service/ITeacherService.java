@@ -4,8 +4,7 @@ import gr.aueb.cf.eduapp.core.exceptions.EntityAlreadyExistsException;
 import gr.aueb.cf.eduapp.core.exceptions.EntityInvalidArgumentException;
 import gr.aueb.cf.eduapp.core.exceptions.EntityNotFoundException;
 import gr.aueb.cf.eduapp.core.exceptions.FileUploadException;
-// import gr.aueb.cf.eduapp.core.filters.TeacherFilters;
-// import gr.aueb.cf.eduapp.dto.TeacherUpdateDTO;
+import gr.aueb.cf.eduapp.core.filters.TeacherFilters;
 import gr.aueb.cf.eduapp.dto.TeacherInsertDTO;
 import gr.aueb.cf.eduapp.dto.TeacherReadOnlyDTO;
 import gr.aueb.cf.eduapp.dto.TeacherUpdateDTO;
@@ -17,11 +16,11 @@ import java.io.IOException;
 import java.util.UUID;
 
 public interface ITeacherService {
-//    TeacherReadOnlyDTO saveTeacher(TeacherInsertDTO teacherInsertDTO, MultipartFile file)
-//        throws EntityAlreadyExistsException, EntityInvalidArgumentException, IOException, EntityNotFoundException;
 
     TeacherReadOnlyDTO saveTeacher(TeacherInsertDTO teacherInsertDTO)
             throws EntityAlreadyExistsException, EntityInvalidArgumentException;
+    // TeacherReadOnlyDTO saveTeacherWithAmkaFile(TeacherInsertDTO teacherInsertDTO, MultipartFile file)
+    //         throws EntityAlreadyExistsException, EntityInvalidArgumentException, IOException, EntityNotFoundException;
 
     void saveAmkaFile(UUID uuid, MultipartFile amkaFile)
             throws FileUploadException, EntityNotFoundException;
@@ -34,9 +33,10 @@ public interface ITeacherService {
     TeacherReadOnlyDTO getTeacherByUUID(UUID uuid) throws EntityNotFoundException;
     TeacherReadOnlyDTO getTeacherByUUIDDeletedFalse(UUID uuid) throws EntityNotFoundException;
 
-    Page<TeacherReadOnlyDTO> getPaginatedTeachers(Pageable pageable);
-    Page<TeacherReadOnlyDTO> getPaginatedTeachersDeletedFalse(Pageable pageable);
-    // Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters)
-    //         throws EntityNotFoundException;
+    Page<TeacherReadOnlyDTO> getTeachersPaginated(Pageable pageable);
+    Page<TeacherReadOnlyDTO> getTeachersPaginatedDeletedFalse(Pageable pageable);
+    Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters)
+            throws EntityNotFoundException;
+
     boolean isTeacherExistsByVat(String vat);
 }

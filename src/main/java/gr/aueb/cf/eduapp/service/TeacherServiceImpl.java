@@ -5,8 +5,7 @@ import gr.aueb.cf.eduapp.core.exceptions.EntityInvalidArgumentException;
 import gr.aueb.cf.eduapp.core.exceptions.EntityNotFoundException;
 import gr.aueb.cf.eduapp.core.exceptions.FileUploadException;
 // import gr.aueb.cf.eduapp.core.filters.Paginated;
-// import gr.aueb.cf.eduapp.core.filters.TeacherFilters;
-// import gr.aueb.cf.eduapp.dto.TeacherUpdateDTO;
+import gr.aueb.cf.eduapp.core.filters.TeacherFilters;
 import gr.aueb.cf.eduapp.dto.TeacherInsertDTO;
 import gr.aueb.cf.eduapp.dto.TeacherReadOnlyDTO;
 import gr.aueb.cf.eduapp.dto.TeacherUpdateDTO;
@@ -14,7 +13,7 @@ import gr.aueb.cf.eduapp.mapper.Mapper;
 import gr.aueb.cf.eduapp.model.*;
 import gr.aueb.cf.eduapp.model.static_data.Region;
 import gr.aueb.cf.eduapp.repository.*;
-// import gr.aueb.cf.eduapp.specification.TeacherSpecification;
+import gr.aueb.cf.eduapp.specification.TeacherSpecification;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tika.Tika;
@@ -131,7 +130,7 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     @PreAuthorize("hasAuthority('VIEW_TEACHERS')")
     @Transactional(readOnly = true)
-    public Page<TeacherReadOnlyDTO> getPaginatedTeachers(Pageable pageable) {
+    public Page<TeacherReadOnlyDTO> getTeachersPaginated(Pageable pageable) {
         Page<Teacher> teachersPage = teacherRepository.findAll(pageable);
         log.debug("Get paginated returned successfully page={} and size={}", teachersPage.getNumber(), teachersPage.getSize());
         return teachersPage.map(mapper::mapToTeacherReadOnlyDTO);
@@ -140,7 +139,7 @@ public class TeacherServiceImpl implements ITeacherService {
     @Override
     @PreAuthorize("hasAuthority('VIEW_TEACHERS')")
     @Transactional(readOnly = true)
-    public Page<TeacherReadOnlyDTO> getPaginatedTeachersDeletedFalse(Pageable pageable) {
+    public Page<TeacherReadOnlyDTO> getTeachersPaginatedDeletedFalse(Pageable pageable) {
         Page<Teacher> teachersPage = teacherRepository.findAllByDeletedFalse(pageable);
         log.debug("Get paginated not deleted returned successfully page={} and size={}", teachersPage.getNumber(), teachersPage.getSize());
         return teachersPage.map(mapper::mapToTeacherReadOnlyDTO);
@@ -339,40 +338,40 @@ public class TeacherServiceImpl implements ITeacherService {
 //    }
 
 
-//    @Override
-//    @PreAuthorize("hasAuthority('VIEW_TEACHERS')")
-//    @Transactional(readOnly = true)
-//    public Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters)
-//            throws EntityNotFoundException {
-//        try {
-//            if (filters.getUuid() != null) {
-//                Teacher teacher = teacherRepository.findByUuid(filters.getUuid())
-//                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "uuid=" + filters.getUuid() + " not found"));
-//                return singleResultPage(teacher, pageable);
-//            }
-//
-//            if (filters.getVat() != null) {
-//                Teacher teacher = teacherRepository.findByVat(filters.getVat())
-//                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "vat=" + filters.getVat() + " not found"));
-//                return singleResultPage(teacher, pageable);
-//            }
-//
-//            if (filters.getAmka() != null) {
-//                Teacher teacher = teacherRepository.findByPersonalInfo_Amka(filters.getAmka())
-//                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "amka=" + filters.getAmka() + " not found"));
-//                return singleResultPage(teacher, pageable);
-//            }
-//
-//            var filtered = teacherRepository.findAll(TeacherSpecification.build(filters), pageable);
-//
-//            log.debug("Filtered and paginated teachers were returned successfully with page={} and size={}", pageable.getPageNumber(),
-//                    pageable.getPageSize());
-//            return filtered.map(mapper::mapToTeacherReadOnlyDTO);
-//        } catch (EntityNotFoundException e) {
-//            log.error("Filtered and paginated teachers were not found", e);
-//            throw e;
-//        }
-//    }
+    @Override
+    @PreAuthorize("hasAuthority('VIEW_TEACHERS')")
+    @Transactional(readOnly = true)
+    public Page<TeacherReadOnlyDTO> getTeachersPaginatedFiltered(Pageable pageable, TeacherFilters filters)
+            throws EntityNotFoundException {
+        try {
+            if (filters.getUuid() != null) {
+                Teacher teacher = teacherRepository.findByUuid(filters.getUuid())
+                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "uuid=" + filters.getUuid() + " not found"));
+                return singleResultPage(teacher, pageable);
+            }
+
+            if (filters.getVat() != null) {
+                Teacher teacher = teacherRepository.findByVat(filters.getVat())
+                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "vat=" + filters.getVat() + " not found"));
+                return singleResultPage(teacher, pageable);
+            }
+
+            if (filters.getAmka() != null) {
+                Teacher teacher = teacherRepository.findByPersonalInfo_Amka(filters.getAmka())
+                        .orElseThrow(() -> new EntityNotFoundException("Teacher", "amka=" + filters.getAmka() + " not found"));
+                return singleResultPage(teacher, pageable);
+            }
+
+            var filtered = teacherRepository.findAll(TeacherSpecification.build(filters), pageable);
+
+            log.debug("Filtered and paginated teachers were returned successfully with page={} and size={}", pageable.getPageNumber(),
+                    pageable.getPageSize());
+            return filtered.map(mapper::mapToTeacherReadOnlyDTO);
+        } catch (EntityNotFoundException e) {
+            log.error("Filtered and paginated teachers were not found", e);
+            throw e;
+        }
+    }
 
     private String getFileExtension(String filename) {
         if (filename != null && filename.contains(".")) {
