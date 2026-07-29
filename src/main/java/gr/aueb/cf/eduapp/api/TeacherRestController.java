@@ -96,4 +96,10 @@ public class TeacherRestController {
         TeacherReadOnlyDTO teacherReadOnlyDTO = teacherService.getTeacherByUUIDDeletedFalse(uuid);
         return ResponseEntity.ok(teacherReadOnlyDTO);
     }
+
+    @DeleteMapping("/{uuid}")
+    public ResponseEntity<TeacherReadOnlyDTO> deleteTeacherByUUID(@PathVariable UUID uuid) throws EntityNotFoundException {
+        TeacherReadOnlyDTO teacherReadOnlyDTO = teacherService.deleteTeacherByUUID(uuid);
+        return ResponseEntity.ok(teacherReadOnlyDTO);
+    }
 }

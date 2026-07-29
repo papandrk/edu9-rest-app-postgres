@@ -208,12 +208,11 @@ public class TeacherServiceImpl implements ITeacherService {
             teacher.softDelete();
             teacher.getPersonalInfo().softDelete();
             teacher.getUser().softDelete();
-            // No save needed if Teacher is managed
-//            teacherRepository.save(teacher);
-            log.info("Teacher with uuid={} deleted successfully", uuid);
+            // teacherRepository.save(teacher); // No save needed if Teacher is managed
+            log.info("Teacher with uuid={} soft-deleted successfully", uuid);
             return mapper.mapToTeacherReadOnlyDTO(teacher);
         } catch (EntityNotFoundException e) {
-            log.error("Update failed for teacher with uuid={}. Teacher not found", uuid, e);
+            log.error("Soft-delete failed for teacher with uuid={}. Teacher not found", uuid, e);
 
             // Automatic rollback due to @Transactional annotation
             throw e;

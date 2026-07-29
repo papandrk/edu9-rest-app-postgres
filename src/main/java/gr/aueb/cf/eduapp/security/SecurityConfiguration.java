@@ -59,6 +59,7 @@ public class SecurityConfiguration {
                                 .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasAuthority("VIEW_USER")
                                 .requestMatchers(HttpMethod.GET, "/api/v1/teachers").hasAuthority("VIEW_TEACHERS")
                                 .requestMatchers(HttpMethod.GET, "/api/v1/teachers/{uuid}").hasAnyAuthority("VIEW_TEACHER", "VIEW_ONLY_TEACHER")
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/teachers/{uuid}").hasAuthority("DELETE_TEACHER")
                                 .anyRequest().authenticated()
                         )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
