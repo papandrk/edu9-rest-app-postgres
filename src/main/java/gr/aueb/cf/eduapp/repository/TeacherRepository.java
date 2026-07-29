@@ -29,4 +29,6 @@ public interface TeacherRepository extends JpaRepository<Teacher, Long>, JpaSpec
 
     Optional<Teacher> findByUuidAndDeletedFalse(UUID uuid);
     Optional<Teacher> findByVatAndDeletedFalse(String vat);
+
+    boolean existsByUuidAndUser_Uuid(UUID teacherUuid, UUID userUuid);
 }
