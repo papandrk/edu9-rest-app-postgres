@@ -49,18 +49,18 @@ public class SecurityConfiguration {
                         httpSecurityCorsConfigurer.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(req -> req
-                                .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/teachers").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/teachers/{uuid}/*").permitAll() // (for adding an amkaFile) TODO: make only the endpoint with the uuid of current user accessible, unless they have ADMIN role
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/teachers/{uuid}").hasAuthority("EDIT_TEACHER")
-                                // .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll() // not sure if this works/is valid
-                                // .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
-                                .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasAuthority("VIEW_USER")
-                                .requestMatchers(HttpMethod.GET, "/api/v1/teachers").hasAuthority("VIEW_TEACHERS")
-                                .requestMatchers(HttpMethod.GET, "/api/v1/teachers/{uuid}").hasAnyAuthority("VIEW_TEACHER", "VIEW_ONLY_TEACHER")
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/teachers/{uuid}").hasAuthority("DELETE_TEACHER")
-                                .anyRequest().authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/users").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/authenticate").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/teachers").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/teachers/{uuid}/*").permitAll() // (for adding an amkaFile) TODO: make only the endpoint with the uuid of current user accessible, unless they have ADMIN role
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/teachers/{uuid}").hasAuthority("EDIT_TEACHER")
+                        // .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll() // not sure if this works/is valid
+                        // .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/v1/users/*").hasAuthority("VIEW_USER")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/teachers").hasAuthority("VIEW_TEACHERS")
+                        .requestMatchers(HttpMethod.GET, "/api/v1/teachers/{uuid}").hasAnyAuthority("VIEW_TEACHER", "VIEW_ONLY_TEACHER")
+                        .requestMatchers(HttpMethod.DELETE, "/api/v1/teachers/{uuid}").hasAuthority("DELETE_TEACHER")
+                        .anyRequest().authenticated()
                         )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider)
