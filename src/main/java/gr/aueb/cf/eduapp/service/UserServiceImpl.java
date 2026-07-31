@@ -103,4 +103,11 @@ public class UserServiceImpl implements IUserService {
             throw e;
         }
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    // public boolean isUserExists(String username) {
+    public boolean isUserExistsByUsername(String username) {
+        return userRepository.findByUsername(username).isPresent();
+    }
 }

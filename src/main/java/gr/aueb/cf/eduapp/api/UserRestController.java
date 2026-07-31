@@ -9,6 +9,7 @@ import gr.aueb.cf.eduapp.dto.UserInsertDTO;
 import gr.aueb.cf.eduapp.dto.UserReadOnlyDTO;
 import gr.aueb.cf.eduapp.dto.ValidationErrorResponseDTO;
 import gr.aueb.cf.eduapp.service.IUserService;
+import gr.aueb.cf.eduapp.validator.UserInsertValidator;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -31,6 +32,7 @@ import java.util.UUID;
 public class UserRestController {
 
     private final IUserService userService;
+    private final UserInsertValidator userInsertValidator;
 
     @Operation(
             summary = "Register a new user",
@@ -75,7 +77,7 @@ public class UserRestController {
                                                         BindingResult bindingResult)
             throws ValidationException, EntityAlreadyExistsException, EntityInvalidArgumentException {
 
-        // TODO implement validator for business rules
+        userInsertValidator.validate(userInsertDTO, bindingResult); // this catches the same business-logic error as the check in UserService.saveUser (if user already exists). Why do we have this code here? This way it will throw a validation error, instead of us getting the better (more specific) EntityAlreadyExistsException error and its message if we allowed it to reach the service layer...
         if (bindingResult.hasErrors()) {
             throw new ValidationException("User", "Invalid user data", bindingResult);
         }

@@ -15,4 +15,7 @@ public interface IUserService {
 
     UserReadOnlyDTO getUserByUUID(UUID uuid) throws EntityNotFoundException;
     UserReadOnlyDTO getUserByUUIDDeletedFalse(UUID uuid) throws EntityNotFoundException;
+
+    // boolean isUserExists(String username);
+    boolean isUserExistsByUsername(String username);
 }
