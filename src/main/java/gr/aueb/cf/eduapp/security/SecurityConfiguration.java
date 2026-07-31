@@ -55,6 +55,7 @@ public class SecurityConfiguration {
                         .requestMatchers(HttpMethod.POST, "/api/v1/teachers/{uuid}/*").permitAll() // (for adding an amkaFile) TODO: make only the endpoint with the uuid of current user accessible, unless they have ADMIN role
                         // .requestMatchers("/swagger-ui/**", "/swagger-resources/**", "/v3/api-docs/**", "/webjars/**", "/actuator/").permitAll()
                         .requestMatchers("/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**").permitAll()
+                        .requestMatchers("/api/v1/eligible/**").hasRole("ADMIN")
                         .requestMatchers(HttpMethod.PUT, "/api/v1/teachers/{uuid}").hasAuthority("EDIT_TEACHER")
                         // .requestMatchers(HttpMethod.GET, "/api/v1/users/{uuid}").permitAll() // not sure if this works/is valid
                         // .requestMatchers(HttpMethod.GET, "/api/v1/users/*").permitAll()
