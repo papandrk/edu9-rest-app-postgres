@@ -22,7 +22,7 @@ public class Teacher extends AbstractEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column(unique = true, nullable = false, updatable = false)
+    @Column(unique = true, nullable = false, updatable = false, columnDefinition = "UUID")
     private UUID uuid;
 
     @Column(unique = true)
