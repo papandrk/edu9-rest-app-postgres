@@ -40,6 +40,9 @@ public class SecurityConfiguration {
     @Value("${allowed.origins}")
     private List<String> allowedOrigins;
 
+    @Value("${security.bcrypt.strength:10}")
+    private int bcryptStrength;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http, AuthenticationProvider authenticationProvider)
             throws Exception {
